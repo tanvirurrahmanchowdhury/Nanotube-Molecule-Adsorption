@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 flag = eval(input('Press 1 if the adsorbate is NH3 or 0 if it is NO2: '))
 # read data
-din, Edft = np.loadtxt('type_1_NH3_PBE.txt',skiprows=5,unpack=True)
+din, Edft = np.loadtxt('binding_energy.txt',skiprows=5,unpack=True)
 #E = np.empty(len(din))
 Evdw = np.zeros(len(din))
 
@@ -47,12 +47,12 @@ for m in range(0,21):
 
 E_reference =
 b = np.arange(5,9,0.1)
-absolute_error = np.zeros(len(b))
+error = np.zeros(len(b))
 # from Hartress to eV
 for i in range(len(b)):
     Evdw = Evdw * (1-np.exp(-D/b[i]))* 27.2114
     E_total = Edft + Evdw
-    absolute_error[i] = abs(E_total.min() - E_reference)
+    error[i] = E_total.min() - E_reference
     # store somewhere
     # another system calculate MAE again and add to this MAE
     # do this for all 8 systems and then you get the total MAE for this b
@@ -77,7 +77,8 @@ plt.legend(loc='upper right',fontsize=17)
 plt.rc('xtick',labelsize=26)
 plt.rc('ytick',labelsize=26)
 plt.show()
+'''
 # write in a file
 info = 'Absolute Errors'
 info += '\nAuthor: Tanvir Chowdhury'
-np.savetxt('error_type_1_NH3_PBE.txt',list(absolute_error), header=info,fmt='%20.8f')'''
+np.savetxt('error_type_1_NH3_PBE.txt',list(absolute_error), header=info,fmt='%20.8f')
